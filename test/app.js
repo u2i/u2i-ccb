@@ -24,11 +24,9 @@ var app = require('../lib/app');
 chai.use(chaiHttp);
 chai.use(sinonChai);
 
-var clearDb = function(done) {
-  async.each(mongoose.modelNames(), function(name, callback) {
-      mongoose.model(name)
-        .remove({}, callback);
-    },
+var clearDb = done => {
+  async.each(mongoose.modelNames(), (name, callback) => mongoose.model(name)
+    .remove({}, callback),
     done);
 };
 
@@ -46,7 +44,7 @@ monky.factory('Challenge', {
   current: false
 });
 
-describe('routes', function() {
+describe('routes', () => {
   describe('/current-challenge', () => {
     var activeChallenge;
 
@@ -63,7 +61,7 @@ describe('routes', function() {
       });
     });
 
-    it('is a success', function(done) {
+    it('is a success', done => {
       chai.request(app)
         .get('/current-challenge')
         .end((err, res) => {
@@ -73,7 +71,7 @@ describe('routes', function() {
         });
     });
 
-    it('returns the current challenge', function(done) {
+    it('returns the current challenge', done => {
       chai.request(app)
         .get('/current-challenge')
         .end((err, res) => {
@@ -81,10 +79,12 @@ describe('routes', function() {
             .to.equal(activeChallenge.name);
           expect(res.body.description)
             .to.equal(activeChallenge.description);
-          //expect(res.body.inputs).to.eql(activeChallenge.inputs);
+          res.body.inputs.forEach((value, index) => expect(value)
+            .to.eql(activeChallenge.inputs[index]));
           expect(res.body.outputs)
             .to.be.undefined;
-          //expect(res.body.plugins).to.deep.equal(activeChallenge.plugins);
+          res.body.plugins.forEach((value, index) => expect(value)
+            .to.eql(activeChallenge.plugins[index]));
           expect(res.body.current)
             .to.be.true;
           done();
@@ -105,7 +105,7 @@ describe('routes', function() {
       });
     });
 
-    it('is a success', function(done) {
+    it('is a success', done => {
       chai.request(app)
         .get('/teams')
         .end((err, res) => {
@@ -115,17 +115,21 @@ describe('routes', function() {
         });
     });
 
-    it('returns the teams', function(done) {
+    it('returns the teams', done => {
       chai.request(app)
         .get('/teams')
         .end((err, res) => {
-          for (let i = 0; i < 4; i++) {
-            expect(res.body[i].name)
-              .to.equal(teams[i].name);
-            expect(res.body[i].token)
-              .to.be.undefined;
-          }
-          done();
+          Team.find()
+            .select('-token')
+            .then(teams => {
+              for (let i = 0; i < 4; i++) {
+                expect(res.body[i].name)
+                  .to.include(teams[i].name);
+                expect(res.body[i].token)
+                  .to.be.undefined;
+              }
+              done();
+            });
         });
     });
   });
@@ -150,7 +154,7 @@ describe('routes', function() {
       });
     });
 
-    it('is a success', function(done) {
+    it('is a success', done => {
       chai.request(app)
         .post('/current-challenge/solve')
         .send({
@@ -164,7 +168,7 @@ describe('routes', function() {
         });
     });
 
-    it('records the completion of the challenge', function(done) {
+    it('records the completion of the challenge', done => {
       chai.request(app)
         .post('/current-challenge/solve')
         .send({
@@ -195,7 +199,7 @@ describe('routes', function() {
       });
     });
 
-    it('is a success', function(done) {
+    it('is a success', done => {
       chai.request(app)
         .post('/make-current/' + challenge.id)
         .send({
@@ -208,9 +212,9 @@ describe('routes', function() {
         });
     });
 
-    it('it sets the chosen challenge to be current', function(done) {
+    it('it sets the chosen challenge to be current', done => {
       chai.request(app)
-      .post('/make-current/' + challenge.id)
+        .post('/make-current/' + challenge.id)
         .send({
           secret: config.secret
         })
@@ -224,17 +228,18 @@ describe('routes', function() {
         });
     });
 
-    it('causes the app emitter to emmit a ChallengeStarted event', function(done) {
+    it('causes the app emitter to emmit a ChallengeStarted event', done => {
       let eventEmitterSpy = sinon.spy(app.eventEmitter, 'emit');
       chai.request(app)
-      .post('/make-current/' + challenge.id)
+        .post('/make-current/' + challenge.id)
         .send({
           secret: config.secret
         })
         .end((err, res) => {
           Challenge.findById(challenge.id)
             .then(challenge => {
-              expect(eventEmitterSpy).to.have.been.calledWith('ChallengeStarted', JSON.stringify(challenge));
+              expect(eventEmitterSpy)
+                .to.have.been.calledWith('ChallengeStarted', JSON.stringify(challenge));
               done();
             });
         });
