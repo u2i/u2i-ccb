@@ -1,0 +1,7 @@
+{
+  "mongoUri": "localhost/coding-challenge-dev",
+  "mongoUser": "",
+  "mongoPassword": "",
+  "port": 3000,
+  "challengeLength": 10000
+}
