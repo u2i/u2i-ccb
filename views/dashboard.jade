@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1 Dashboard
+
+  #teams
+    table
+      thead
+        th Name
+        th Token
+      tbody
+
+  h2 Add Team
+    #addTeam
+      fieldset
+        input#inputTeamName(type='text', placeholder='Name...')
+        input#inputTeamToken(type='text', placeholder='Token...')
+        br
+        button#btnAddTeam Add Team
