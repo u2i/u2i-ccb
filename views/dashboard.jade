@@ -23,3 +23,35 @@ block content
                 th Name
                 th Token
               tbody
+
+    .col-md-6
+      .panel.panel-default
+        .panel-heading
+          strong Challenges
+        .panel-body
+          h4 Add Challenge
+          form#add-challenge.form-inline
+            input.form-control(name='name', type='text', placeholder='Name...')
+            textarea.form-control(name='description', placeholder='Description...')
+            input.form-control(name='inputs[0]', type='text', placeholder='Input 1...')
+            input.form-control(name='outputs[0]', type='text', placeholder='Output 1...')
+            input.form-control(name='inputs[1]', type='text', placeholder='Input 2...')
+            input.form-control(name='outputs[1]', type='text', placeholder='Output 2...')
+            input.form-control(name='inputs[2]', type='text', placeholder='Input 3...')
+            input.form-control(name='outputs[2]', type='text', placeholder='Output 3...')
+            input.form-control(name='plugins[0]', type='text', placeholder='Plugin 1...')
+            input.form-control(name='plugins[1]', type='text', placeholder='Plugin 2...')
+            input.form-control(name='plugins[2]', type='text', placeholder='Plugin 3...')
+            input.form-control(name='plugins[3]', type='text', placeholder='Plugin 4...')
+            br
+            button.btn.btn-info#btn-add-challenge Add Challenge
+          br
+          #challenges
+            table.table.table-bordered.table-condensed
+              thead
+                th Name
+                th Description
+                th Inputs
+                th Outputs
+                th Plugins
+              tbody
