@@ -1,19 +1,25 @@
 extends layout
 
 block content
-  h1 Dashboard
+  h1 Coding Challenge Dashboard
 
-  #teams
-    table
-      thead
-        th Name
-        th Token
-      tbody
-
-  h2 Add Team
-    #addTeam
-      fieldset
-        input#inputTeamName(type='text', placeholder='Name...')
-        input#inputTeamToken(type='text', placeholder='Token...')
-        br
-        button#btnAddTeam Add Team
+  .row
+    .col-md-6
+      .panel.panel-default
+        .panel-heading
+          strong Teams
+        .panel-body
+          h4 Add Team
+          #addTeam
+            fieldset
+              input.form-control#inputTeamName(type='text', placeholder='Name...')
+              input.form-control#inputTeamToken(type='text', placeholder='Token...')
+              br
+              button.btn.btn-info#btnAddTeam Add Team
+          br
+          #teams
+            table.table.table-bordered.table-condensed
+              thead
+                th Name
+                th Token
+              tbody
