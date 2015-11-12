@@ -30,19 +30,16 @@ block content
           strong Challenges
         .panel-body
           h4 Add Challenge
-          form#add-challenge.form-inline
+          form#add-challenge
             input.form-control(name='name', type='text', placeholder='Name...')
+            br
             textarea.form-control(name='description', placeholder='Description...')
-            input.form-control(name='inputs[0]', type='text', placeholder='Input 1...')
-            input.form-control(name='outputs[0]', type='text', placeholder='Output 1...')
-            input.form-control(name='inputs[1]', type='text', placeholder='Input 2...')
-            input.form-control(name='outputs[1]', type='text', placeholder='Output 2...')
-            input.form-control(name='inputs[2]', type='text', placeholder='Input 3...')
-            input.form-control(name='outputs[2]', type='text', placeholder='Output 3...')
-            input.form-control(name='plugins[0]', type='text', placeholder='Plugin 1...')
-            input.form-control(name='plugins[1]', type='text', placeholder='Plugin 2...')
-            input.form-control(name='plugins[2]', type='text', placeholder='Plugin 3...')
-            input.form-control(name='plugins[3]', type='text', placeholder='Plugin 4...')
+            .input-output-fields
+              button.btn.btn-info#btn-add-input-output Add Input/Output
+              br
+            .plugins
+              button.btn.btn-info#btn-add-plugin Add Plugin
+              br
             br
             button.btn.btn-info#btn-add-challenge Add Challenge
           br
@@ -54,4 +51,5 @@ block content
                 th Inputs
                 th Outputs
                 th Plugins
+                th Actions
               tbody
