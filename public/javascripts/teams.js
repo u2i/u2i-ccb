@@ -2,7 +2,7 @@ var teamsData = [];
 
 $(document).ready(function() {
     populateTeamsTable();
-    $('#btnAddTeam').on('click', addTeam);
+    $('#btn-add-team1').on('click', addTeam);
 });
 
 function populateTeamsTable() {
@@ -12,9 +12,15 @@ function populateTeamsTable() {
 	teamsData = data;
 
 	$.each(data, function() {
+	    var members = '';
+	    $.each(this.members, function() {
+	    	members += this.name + '\n';
+	    });
+
 	    tableContent += '<tr>';
-	    tableContent += '<td><a href="#" class="link-show-team" rel="' + this.name + '">' + this.name + '</a></td>';
+	    tableContent += '<td>' + this.name + '</td>';
 	    tableContent += '<td>' + this.token + '</td>';
+	    tableContent += '<td>' + this.members + '</td>';
 	    tableContent += '</tr>';
 	});
 	$('#teams table tbody').html(tableContent);
@@ -24,17 +30,15 @@ function populateTeamsTable() {
 function addTeam(event) {
     event.preventDefault();
 
-    var newTeam = {
-	'name': $('#addTeam #inputTeamName').val(),
-	'token': $('#addTeam #inputTeamToken').val()
-    };
-
+    var newTeam = $('#add-team').serializeArray();
+    console.log(newTeam);
     $.ajax({
 	type: 'POST',
 	data: newTeam,
 	url: '/teams',
 	dataType: 'JSON'
     }).done(function(response) {
+	$('#add-team input').val('');
 	populateTeamsTable();
     });
 }

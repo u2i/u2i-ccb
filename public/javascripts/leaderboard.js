@@ -39,10 +39,12 @@ function addTeam(team) {
     }
 
     var scoresInfo = '';
-    $.each(team.scores, function() {
-	console.log(this['challenge']);
-	scoresInfo += '<p>Solved: ' + this.challenge + '</p>'
-    });
+    if(team.scores !== undefined) {
+	$.each(team.scores, function() {
+	    console.log(this['challenge']);
+	    scoresInfo += '<p>Solved: ' + this.challenge + '</p>'
+	});
+    }
 
     var teamInfo = '<div class="team" rel="' + team.name + '">' +
 	'<h3>' + team.name + '</h3>' +
