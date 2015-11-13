@@ -5,6 +5,8 @@ var config = require('config');
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
+var team = require('./lib/team');
+
 server.listen(config.port);
 
 app.eventEmitter.on('ChallengeStarted', challengeData => {
@@ -13,4 +15,17 @@ app.eventEmitter.on('ChallengeStarted', challengeData => {
 
 app.eventEmitter.on('ChallengeFinished', challengeData => {
   io.emit('ChallengeFinished', challengeData);
+});
+
+io.on('connection', function(socket) {
+    socket.on('TeamConnected', function(teamToken) {
+	team.activate(teamToken, function(err, team) {
+	    if(err) {
+		socket.emit('ConnectionFailed', err);
+	    } else {
+		io.emit('TeamActivated', JSON.stringify(team));
+		socket.emit('ConnectionSuccess', JSON.stringify(team));
+	    }
+	});
+    });
 });
