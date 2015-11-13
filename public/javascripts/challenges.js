@@ -5,6 +5,8 @@ $(document).ready(function() {
     $('#btn-add-challenge').on('click', addChallenge);
     $('#btn-add-input-output').on('click', addInputOutput);
     $('#btn-add-plugin').on('click', addPlugin);
+    $(document).on('click', '#add-challenge .remove-input-output', removeAssociatedInputs);
+    $(document).on('click', '#add-challenge .remove-plugin', removeAssociatedInputs);
     $(document).on('click', '#challenges .start-challenge', startChallenge);
 });
 
@@ -41,18 +43,20 @@ function addChallenge(event) {
     }).done(function(response) {
 	populateChallengesTable();
 	$('#add-challenge input').val('');
-	$('#add-challenge .plugins input').remove();
-	$('#add-challenge .input-output-fields input').remove();
+	$('#add-challenge textarea').val('');
+	$('#add-challenge .plugins div').remove();
+	$('#add-challenge .input-output-fields div').remove();
     });
 }
 
 function addInputOutput(event) {
     event.preventDefault();
 
-    var numberOfInputs = $('#add-challenge .input-output-fields input').length / 2;
-
-    htmlContent = '<input name="inputs[' + (numberOfInputs) + ']" type="text" placeholder="Input..." class="form-control">'
-    htmlContent += '<input name="outputs[' + (numberOfInputs) + ']" type="text" placeholder="Output..." class="form-control">'
+    htmlContent = '<div><br/>';
+    htmlContent += '<input name="inputs" type="text" placeholder="Input..." class="form-control">'
+    htmlContent += '<input name="outputs" type="text" placeholder="Output..." class="form-control">'
+    htmlContent += '<button class="remove-input-output btn btn-xs btn-danger">Remove</button>'
+    htmlContent += '</div>';
 
     $('#add-challenge .input-output-fields').append(htmlContent);
 }
@@ -62,13 +66,15 @@ function addPlugin(event) {
 
     var numberOfPlugins = $('#add-challenge .plugins input').length;
 
-    htmlContent = '<input name="plugins[' + (numberOfPlugins + 1) + ']" type="text" placeholder="Plugin..." class="form-control">'
+    htmlContent = '<div><br/>';
+    htmlContent += '<input name="plugins" type="text" placeholder="Plugin..." class="form-control">';
+    htmlContent += '<button class="remove-plugin btn btn-xs btn-danger">Remove</button>'
+    htmlContent += '</div>';
 
     $('#add-challenge .plugins').append(htmlContent);
 }
 
 function startChallenge(event) {
-    console.log('started challenge');
     event.preventDefault();
 
     $.ajax({
@@ -77,4 +83,10 @@ function startChallenge(event) {
     }).done(function(response) {
 
     });
+}
+
+function removeAssociatedInputs(event) {
+    event.preventDefault();
+
+    $(this).parent().remove();
 }

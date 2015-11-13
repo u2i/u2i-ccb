@@ -42,12 +42,15 @@ block content
             input.form-control(name='name', type='text', placeholder='Name...')
             br
             textarea.form-control(name='description', placeholder='Description...')
-            .input-output-fields
-              button.btn.btn-info#btn-add-input-output Add Input/Output
-              br
-            .plugins
-              button.btn.btn-info#btn-add-plugin Add Plugin
-              br
+            br
+            .panel.panel-default
+              .panel-body.input-output-fields
+                button.btn.btn-primary.btn-xs#btn-add-input-output Add Input/Output
+                br
+            .panel.panel-default
+              .panel-body.plugins
+                button.btn.btn-primary.btn-xs#btn-add-plugin Add Plugin
+                br
             br
             button.btn.btn-info#btn-add-challenge Add Challenge
           br
