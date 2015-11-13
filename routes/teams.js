@@ -9,6 +9,14 @@ router.get('/', function(req, res) {
 	      () => res.sendStatus(503));
 });
 
+router.get('/active', function(req, res) {
+    Team.find({active: true})
+    	.populate('scores')
+    	.exec()
+    	.then(teams => res.json(teams),
+    	      () => res.sendStatus(503));
+});
+
 router.post('/', function(req, res) {
     var team = new Team(req.body);
 

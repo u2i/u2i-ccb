@@ -49,10 +49,10 @@ function addChallenge(event) {
 function addInputOutput(event) {
     event.preventDefault();
 
-    var numberOfInputs = $('#add-challenge .input-output-fields input').length;
+    var numberOfInputs = $('#add-challenge .input-output-fields input').length / 2;
 
-    htmlContent = '<input name="inputs[' + (numberOfInputs + 1) + ']" type="text" placeholder="Input..." class="form-control">'
-    htmlContent += '<input name="outputs[' + (numberOfInputs + 1) + ']" type="text" placeholder="Output..." class="form-control">'
+    htmlContent = '<input name="inputs[' + (numberOfInputs) + ']" type="text" placeholder="Input..." class="form-control">'
+    htmlContent += '<input name="outputs[' + (numberOfInputs) + ']" type="text" placeholder="Output..." class="form-control">'
 
     $('#add-challenge .input-output-fields').append(htmlContent);
 }

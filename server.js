@@ -21,10 +21,9 @@ io.on('connection', function(socket) {
     socket.on('TeamConnected', function(teamToken) {
 	team.activate(teamToken, function(err, team) {
 	    if(err) {
-		socket.emit('ConnectionFailed', err);
+		socket.emit('IncorrectAuthentication', err);
 	    } else {
 		io.emit('TeamActivated', JSON.stringify(team));
-		socket.emit('ConnectionSuccess', JSON.stringify(team));
 	    }
 	});
     });

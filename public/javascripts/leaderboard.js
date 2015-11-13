@@ -20,6 +20,7 @@ $(document).ready(function() {
 
 function initLeaderboard() {
     setNoChallengeInfo();
+    loadTeamsData();
 }
 
 function setCurrentChallengeInfo(challenge) {
@@ -37,9 +38,24 @@ function addTeam(team) {
 	return;
     }
 
+    var scoresInfo = '';
+    $.each(team.scores, function() {
+	console.log(this['challenge']);
+	scoresInfo += '<p>Solved: ' + this.challenge + '</p>'
+    });
+
     var teamInfo = '<div class="team" rel="' + team.name + '">' +
 	'<h3>' + team.name + '</h3>' +
+	scoresInfo +
 	'</div>';
 
     $('#teams').append(teamInfo);
+}
+
+function loadTeamsData() {
+    $.getJSON('/teams/active', function(data) {
+	$.each(data, function() {
+	    addTeam(this);
+	});
+    });
 }
