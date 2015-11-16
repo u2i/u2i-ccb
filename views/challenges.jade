@@ -1,0 +1,35 @@
+extends dashboard_layout
+
+block content
+  h1 Challenges
+  .panel.panel-default
+    .panel-heading
+      strong Challenges
+    .panel-body
+      h4 Add Challenge
+      form#add-challenge
+        input.form-control(name='name', type='text', placeholder='Name...')
+        br
+        textarea.form-control(name='description', placeholder='Description...')
+        br
+        .panel.panel-default
+          .panel-body.input-output-fields
+            button.btn.btn-primary.btn-xs#btn-add-input-output Add Input/Output
+            br
+        .panel.panel-default
+          .panel-body.plugins
+            button.btn.btn-primary.btn-xs#btn-add-plugin Add Plugin
+            br
+        br
+        button.btn.btn-info#btn-add-challenge Add Challenge
+      br
+      #challenges
+        table.table.table-bordered.table-condensed
+          thead
+            th Name
+            th Description
+            th Inputs
+            th Outputs
+            th Plugins
+            th Actions
+          tbody

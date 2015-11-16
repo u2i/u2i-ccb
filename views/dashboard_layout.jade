@@ -5,6 +5,11 @@ html
     link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css')
   body
     .container
+      ul.nav.nav-pills
+        li
+          a(href='/dashboard') Dashboard
+        li
+          a(href='/dashboard/challenges') Challenges
       block content
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
     script(src='/javascripts/teams.js')
