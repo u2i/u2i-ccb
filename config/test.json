@@ -1,3 +1,4 @@
 {
-  "mongoUri": "localhost/coding-challenge-test"
+  "mongoUri": "localhost/coding-challenge-test",
+  "secret": "asdfg12345"
 }
